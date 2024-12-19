@@ -1,0 +1,54 @@
+﻿@using Newtonsoft.Json
+@using Sitecore_Blazor.Helper
+@using Sitecore_Blazor.Models.Blocks
+
+
+
+<section class="slick-slideshow">
+
+    @*@foreach (var carouselItem in CarouselModel.CarouselList)
+    {
+        if (carouselItem != null)
+        {
+             <div class="slick-custom">
+                <img src="@carouselItem.Image" class="img-fluid" alt="">
+
+                <div class="slick-bottom">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-6 col-10">
+                                <h1 class="slick-title">@carouselItem.Heading</h1>
+
+                                <p class="lead text-white mt-lg-3 mb-lg-5">@carouselItem.SubHeading</p>
+
+                                <a href="@carouselItem.ButtonLink" class="btn custom-btn">@carouselItem.ButtonText</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        }
+    }*@
+</section>
+
+@code {
+    [Parameter]
+    public Dictionary<string, object> Fields { get; set; }
+
+    public CarouselModel CarouselModel { get; set; }
+
+    protected override async Task OnInitializedAsync()
+
+    {
+        try
+        {
+            // Serialize the Fields dictionary to a JSON string
+            CarouselModel = FieldHelper.MapModel<CarouselModel>(Fields);
+        }
+        catch (Exception ex)
+        {
+            // Log or handle the exception
+            Console.WriteLine($"Error during deserialization: {ex.Message}");
+        }
+    }
+}

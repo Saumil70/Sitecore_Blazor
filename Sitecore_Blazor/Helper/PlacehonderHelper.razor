@@ -1,0 +1,35 @@
+﻿@using sitecoreblazor.SitecoreModels;
+@using System.Reflection
+
+@foreach (var component in Components)
+{
+    Type componentType = GetType(component.componentName);
+    if (componentType != null)
+    {
+        var parameters = new Dictionary<string, object> { { "Fields", component.fields } };
+        <DynamicComponent Type="componentType" Parameters="parameters" />
+    }
+}
+
+@code {
+    [Parameter]
+    public string Name { get; set; }
+    [Parameter]
+    public Dictionary<string, List<Component>> RouteData { get; set; }
+
+    public RenderFragment ChildContent { get; set; }
+    public List<Component> Components { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        //ADD Null Check
+        Components = RouteData.Where(x => x.Key == Name).FirstOrDefault().Value;
+    }
+    private Type GetType(string parameter)
+    {
+        var assembly = Assembly.GetExecutingAssembly();
+        return assembly.GetTypes()
+                       .FirstOrDefault(t => t.Name == parameter);
+    }
+}
+

@@ -1,0 +1,35 @@
+﻿@page "/{pageSlug}"
+@using Sitecore_Blazor.Helper
+@using Sitecore_Blazor.RestGateway
+@using sitecoreblazor
+@using System.Reflection
+@using Newtonsoft.Json
+@using sitecoreblazor.SitecoreModels
+@inject IRestGatewayManager RestGatewayManager
+@inject NavigationManager NavigationManager
+
+@if (ContentData != null)
+{
+    <PlacehonderHelper Name="jss-main" RouteData="ContentData.sitecore.route.placeholders" />
+}
+else
+{
+    <p>Loading or no components available...</p>
+}
+
+
+@code {
+    [Parameter]
+    public string pageSlug { get; set; }
+
+    public Root ContentData { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {   
+        string apiUrl = Constants.SitecoreCMUrl + Constants.LayoutRender + Constants.ItemApi + Constants.ProjectRoot + pageSlug + "&sc_apikey=" + Constants.SCApiKey;
+   
+        var result = await RestGatewayManager.GetAsync<Root>(apiUrl, null, RestEndPointManager.RestEndpoint.CE, null);
+        ContentData = result.ResultData;
+    }
+}
