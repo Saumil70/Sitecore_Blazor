@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Sitecore_Blazor.Models.SitecoreFields;
 
 public class ButtonField
 {
@@ -28,7 +29,13 @@ public class ImageField
 
 public class ImageValue
 {
-    public string Src { get; set; }
+    private string _src;
+
+    public string Src
+    {
+        get => string.IsNullOrEmpty(_src) ? string.Empty : ImageResolver.ResolveUrl(_src);
+        set => _src = value;
+    }
     public string Alt { get; set; }
     public string Width { get; set; }
     public string Height { get; set; }
@@ -37,23 +44,6 @@ public class ImageValue
 public class SingleLine
 {
     public string Value { get; set; }
-}
-
-public class CarouselItemField
-{
-    public ButtonField Button { get; set; } 
-    public SingleLine Heading { get; set; } 
-    public ImageField Image { get; set; }  
-    public SingleLine SubHeading { get; set; } 
-}
-
-public class CarouselItem
-{
-    public string Id { get; set; }
-    public string Url { get; set; }
-    public string Name { get; set; }
-    public string DisplayName { get; set; }
-    public CarouselItemField Fields { get; set; }
 }
 
 public class HeadingField

@@ -1,0 +1,73 @@
+﻿@using Sitecore_Blazor.Helper
+@using Sitecore_Blazor.Models.Component
+
+
+<section class="featured-product section-padding">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-12 text-center">
+                <h2 class="mb-5">@FeaturedProductModel.FeaturedProductsTitle.Value</h2>
+            </div>
+
+            @foreach (var product in FeaturedProductModel.Products)
+            {
+                <div class="col-lg-4 col-12 mb-3">
+                    <div class="product-thumb">
+                        <a href="product-detail.html">
+                            <img src="@product.Fields.Image.Value.Src" class="img-fluid product-image" alt="@product.Fields.Image.Value.Alt">
+                        </a>
+
+                        <div class="product-top d-flex">
+                            @if (!String.IsNullOrEmpty(product.Fields.ProductStatus.Value))
+                            {
+                                <span class="product-alert">@product.Fields.ProductStatus.Value</span>
+                            }
+
+                            <a href="#" class="bi-heart-fill product-icon ms-auto"></a>
+                        </div>
+
+                        <div class="product-info d-flex">
+                            <div>
+                                <h5 class="product-title mb-0">
+                                    <a href="product-detail.html" class="product-title-link">@product.Fields.ProductName.Value</a>
+                                </h5>
+
+                                <p class="product-p">@product.Fields.ProductDescription.Value</p>
+                            </div>
+
+                            <small class="product-price text-muted ms-auto mt-auto mb-5">@product.Fields.Price.Value</small>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+            <div class="col-12 text-center">
+                <a href="@FeaturedProductModel.Button.Value.Href" class="view-all">@FeaturedProductModel.Button.Value.Text</a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+@code {
+    [Parameter]
+    public Dictionary<string, object> Fields { get; set; }
+
+    public FeaturedProductModel FeaturedProductModel { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            // Serialize the Fields dictionary to a JSON string
+            FeaturedProductModel = FieldHelper.MapModel<FeaturedProductModel>(Fields);
+        }
+        catch (Exception ex)
+        {
+            // Log or handle the exception
+            Console.WriteLine($"Error during deserialization: {ex.Message}");
+        }
+    }
+}

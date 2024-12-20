@@ -1,0 +1,50 @@
+﻿@using Sitecore_Blazor.Helper
+@using Sitecore_Blazor.Models.Component
+
+
+<section class="front-product">
+    <div class="container-fluid p-0">
+        <div class="row align-items-center">
+
+            <div class="col-lg-6 col-12">
+                <img src="@FrontProductModel.Image.Value.Src" class="img-fluid" alt="@FrontProductModel.Image.Value.Alt">
+            </div>
+
+            <div class="col-lg-6 col-12">
+                <div class="px-5 py-5 py-lg-0">
+
+                    <h2 class="mb-4">@FrontProductModel.FrontProductTitle.Value</h2>
+
+                    <p class="lead mb-4">@FrontProductModel.FrontProductDescription.Value</p>
+
+                    <a href="@FrontProductModel.Button.Value.Href" class="custom-link">
+                        @FrontProductModel.Button.Value.Text
+                        <i class="bi-arrow-right ms-2"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+@code {
+    [Parameter]
+    public Dictionary<string, object> Fields { get; set; }
+
+    public FrontProductModel FrontProductModel { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            // Serialize the Fields dictionary to a JSON string
+            FrontProductModel = FieldHelper.MapModel<FrontProductModel>(Fields);
+        }
+        catch (Exception ex)
+        {
+            // Log or handle the exception
+            Console.WriteLine($"Error during deserialization: {ex.Message}");
+        }
+    }
+}

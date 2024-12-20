@@ -6,29 +6,29 @@
 
 <section class="slick-slideshow">
 
-    @*@foreach (var carouselItem in CarouselModel.CarouselList)
+    @foreach (var carouselItem in CarouselModel.CarouselList)
     {
         if (carouselItem != null)
         {
              <div class="slick-custom">
-                <img src="@carouselItem.Image" class="img-fluid" alt="">
+                <img src="@carouselItem.Fields.Image.Value.Src" class="img-fluid" alt="">
 
                 <div class="slick-bottom">
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-6 col-10">
-                                <h1 class="slick-title">@carouselItem.Heading</h1>
+                                <h1 class="slick-title">@carouselItem.Fields.Heading.Value</h1>
 
-                                <p class="lead text-white mt-lg-3 mb-lg-5">@carouselItem.SubHeading</p>
+                                <p class="lead text-white mt-lg-3 mb-lg-5">@carouselItem.Fields.SubHeading.Value</p>
 
-                                <a href="@carouselItem.ButtonLink" class="btn custom-btn">@carouselItem.ButtonText</a>
+                                <a href="@carouselItem.Fields.Button.Value.Href" class="btn custom-btn">@carouselItem.Fields.Button.Value.Text</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div> 
         }
-    }*@
+    }
 </section>
 
 @code {
@@ -38,7 +38,6 @@
     public CarouselModel CarouselModel { get; set; }
 
     protected override async Task OnInitializedAsync()
-
     {
         try
         {
