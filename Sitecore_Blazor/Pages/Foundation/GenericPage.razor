@@ -10,7 +10,13 @@
 
 @if (ContentData != null)
 {
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <PlacehonderHelper Name="jss-header" RouteData="ContentData.sitecore.route.placeholders" />
+        </div>
+    </nav>
     <PlacehonderHelper Name="jss-main" RouteData="ContentData.sitecore.route.placeholders" />
+    <PlacehonderHelper Name="jss-footer" RouteData="ContentData.sitecore.route.placeholders" />
 }
 else
 {
@@ -25,10 +31,10 @@ else
     public Root ContentData { get; set; }
 
 
-    protected override async Task OnInitializedAsync()
-    {   
+    protected override async Task OnParametersSetAsync()
+    {
         string apiUrl = Constants.SitecoreCMUrl + Constants.LayoutRender + Constants.ItemApi + Constants.ProjectRoot + pageSlug + "&sc_apikey=" + Constants.SCApiKey;
-   
+
         var result = await RestGatewayManager.GetAsync<Root>(apiUrl, null, RestEndPointManager.RestEndpoint.CE, null);
         ContentData = result.ResultData;
     }

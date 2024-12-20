@@ -10,7 +10,27 @@ public class ButtonField
 }
 public class ButtonValue
 {
-    public string Href { get; set; }
+    private string _href;
+
+    public string Href
+    {
+        get => _href;
+        set
+        {
+            if (!string.IsNullOrEmpty(value) && value.Contains("sitecore-jss-app.dev.local/en/"))
+            {
+                _href = value.Split('/').Last().ToLower();
+                if(_href == "")
+                {
+                    _href = _href + "/home";
+                }
+            }
+            else
+            {
+                _href = value;
+            }
+        }
+    }
     public string Text { get; set; }
     public string Anchor { get; set; }
     public string LinkType { get; set; }

@@ -1,0 +1,47 @@
+﻿@using Sitecore_Blazor.Helper
+@using Sitecore_Blazor.Models.Shared
+
+@inject NavigationManager NavigationManager;
+
+
+
+
+<div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mx-auto">
+        @foreach (var item in HeaderModel.items)
+        {
+            var isActive = HeaderModel.CurrentPage == item.Url.Split('/').Last().ToLower() ? "active" : "";
+
+            <li class="nav-item">
+                <a class="nav-link @isActive" href="@item.Url.Split('/').Last().ToLower()">@item.Name</a>
+            </li>
+        }
+    </ul>
+</div>
+
+
+@code {
+    [Parameter]
+    public Dictionary<string, object> Fields { get; set; }
+
+    public HeaderModel HeaderModel { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            HeaderModel = FieldHelper.MapModel<HeaderModel>(Fields);
+            HeaderModel.items = HeaderModel.items
+                .Where(item => item?.Fields?.ShowInNavigation?.Value?.ToString() == "true")
+                .ToList();
+
+            var uri = new Uri(NavigationManager.Uri);
+            string currentPageUrl = uri.AbsolutePath.ToLower();
+            HeaderModel.CurrentPage = currentPageUrl.TrimStart('/');
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error during deserialization: {ex.Message}");
+        }
+    }
+}

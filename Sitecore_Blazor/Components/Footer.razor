@@ -1,0 +1,58 @@
+﻿@using Sitecore_Blazor.Helper
+@using Sitecore_Blazor.Models.Shared
+<footer class="site-footer">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-3 col-10 me-auto mb-4">
+                <h4 class="text-white mb-3"><a href="@FooterModel.SiteText.Value.Href">@FooterModel.SiteText.Value.Text</a></h4>
+                <p class="copyright-text text-muted mt-lg-5 mb-4 mb-lg-0">@FooterModel.CopyrightText.Value</p>
+                <br>
+                <p class="copyright-text"><a href="@FooterModel.CopyrightDescription.Value.Href" target="_blank">@FooterModel.CopyrightDescription.Value.Text</a></p>
+            </div>
+
+            <div class="col-lg-5 col-8">
+                <h5 class="text-white mb-3">@FooterModel.SitemapText.Value</h5>
+
+                <ul class="footer-menu d-flex flex-wrap">
+                    @foreach (var siteMapLink in FooterModel.SiteMapLinks)
+                    {
+                        <li class="footer-menu-item"><a href="@siteMapLink.Fields.Link.Value.Href" class="footer-menu-link">@siteMapLink.Fields.Link.Value.Text</a></li>
+                    }
+                </ul>
+            </div>
+
+            <div class="col-lg-3 col-4">
+                <h5 class="text-white mb-3">@FooterModel.SocialText.Value</h5>
+
+                <ul class="social-icon">
+                    @foreach (var socialLink in FooterModel.SocialLinks)
+                    {
+                        <li><a href="@socialLink.Fields.Link.Value.Href" class="@socialLink.Fields.Link.Value.Text"></a></li>
+                    }
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</footer>
+
+@code {
+    [Parameter]
+    public Dictionary<string, object> Fields { get; set; }
+
+    public FooterModel FooterModel { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            FooterModel = FieldHelper.MapModel<FooterModel>(Fields);
+        }
+        catch (Exception ex)
+        {
+            // Log or handle the exception
+            Console.WriteLine($"Error during deserialization: {ex.Message}");
+        }
+    }
+}
