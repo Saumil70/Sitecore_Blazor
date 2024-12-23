@@ -11,5 +11,6 @@
         public const string GetContentByUrlEndpoint = "/api/ContentApi/GetByUrl?path=";
         public const string GetHeaderEndpoint = "/api/HeaderViewComponent/GetHeaderData";
         public const string GetFooterEndpoint = "/api/FooterViewComponent/GetFooterData";
+        public const string UrlWithVersion = "scblazor104sc.dev.local/en/";
     }
 }

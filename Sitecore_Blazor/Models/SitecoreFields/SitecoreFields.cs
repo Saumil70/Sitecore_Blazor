@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Sitecore_Blazor;
 using Sitecore_Blazor.Models.SitecoreFields;
 
 public class ButtonField
@@ -17,7 +18,7 @@ public class ButtonValue
         get => _href;
         set
         {
-            if (!string.IsNullOrEmpty(value) && value.Contains("sitecore-jss-app.dev.local/en/"))
+            if (!string.IsNullOrEmpty(value) && value.Contains(Constants.UrlWithVersion))
             {
                 _href = value.Split('/').Last().ToLower();
                 if(_href == "")
