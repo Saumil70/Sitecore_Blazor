@@ -1,5 +1,6 @@
 ﻿@page "/{pageSlug}"
 @using Sitecore_Blazor.Helper
+@using Sitecore_Blazor.Models.Dtos
 @using Sitecore_Blazor.RestGateway
 @using sitecoreblazor
 @using System.Reflection
@@ -30,6 +31,7 @@ else
 
     public Root ContentData { get; set; }
 
+    public Dictionary<string, string> DictionaryData { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
@@ -37,5 +39,12 @@ else
 
         var result = await RestGatewayManager.GetAsync<Root>(apiUrl, null, RestEndPointManager.RestEndpoint.CE, null);
         ContentData = result.ResultData;
+
+        string dictionaryUrl = Constants.SitecoreCMUrl + Constants.DictionaryRender + Constants.AppNameWithVersion + "?sc_apikey=" + Constants.SCApiKey;
+
+        var dictionaryResult = await RestGatewayManager.GetAsync<DictionaryResponse>(dictionaryUrl, null, RestEndPointManager.RestEndpoint.CE, null);
+        DictionaryData = dictionaryResult.ResultData.Phrases;
+
+        DictionaryHelper.SetDictionaryData(DictionaryData);
     }
 }

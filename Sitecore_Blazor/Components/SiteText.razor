@@ -6,8 +6,9 @@
 </button>
 
 <a class="navbar-brand" href="@SiteTextModel.SiteText.Value.Href">
-    <strong>@SiteTextModel.SiteText.Value.Text</strong>
+    <strong>@DictionaryHelper.GetValue("SiteName")</strong>
 </a>
+
 @code {
     [Parameter]
     public Dictionary<string, object> Fields { get; set; }
@@ -18,12 +19,10 @@
     {
         try
         {
-            // Serialize the Fields dictionary to a JSON string
             SiteTextModel = FieldHelper.MapModel<SiteTextModel>(Fields);
         }
         catch (Exception ex)
         {
-            // Log or handle the exception
             Console.WriteLine($"Error during deserialization: {ex.Message}");
         }
     }
