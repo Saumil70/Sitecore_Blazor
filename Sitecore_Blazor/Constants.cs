@@ -12,7 +12,7 @@
         public const string GetContentByUrlEndpoint = "/api/ContentApi/GetByUrl?path=";
         public const string GetHeaderEndpoint = "/api/HeaderViewComponent/GetHeaderData";
         public const string GetFooterEndpoint = "/api/FooterViewComponent/GetFooterData";
-        public const string UrlWithVersion = "sc104blazorsc.dev.local/en/";
+        public const string UrlWithVersion = "sitecore-jss-app.dev.local/en/";
         public const string AppNameWithVersion = "sitecore-jss-app/en";
     }
 }
