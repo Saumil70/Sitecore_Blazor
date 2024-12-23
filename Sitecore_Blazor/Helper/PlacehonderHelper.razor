@@ -9,6 +9,12 @@
         if (componentType != null)
         {
             var parameters = new Dictionary<string, object> { { "Fields", component.fields } };
+
+            if (DictionaryData != null && DictionaryData.Any() && HasDictionaryDataParameter(componentType))
+            {
+                parameters.Add("DictionaryData", DictionaryData);
+            }
+
             <DynamicComponent Type="componentType" Parameters="parameters" />
         }
     }
@@ -23,6 +29,8 @@ else
     public string Name { get; set; }
     [Parameter]
     public Dictionary<string, List<Component>> RouteData { get; set; }
+    [Parameter]
+    public Dictionary<string, string> DictionaryData { get; set; }
 
     public RenderFragment ChildContent { get; set; }
     public List<Component> Components { get; set; }
@@ -38,12 +46,18 @@ else
             Components = null;
         }
     }
+
     private Type GetType(string parameter)
     {
         parameter = ConvertToPascalCase(parameter);
         var assembly = Assembly.GetExecutingAssembly();
         return assembly.GetTypes()
                        .FirstOrDefault(t => t.Name == parameter);
+    }
+
+    private bool HasDictionaryDataParameter(Type componentType)
+    {
+        return componentType.GetProperty("DictionaryData") != null;
     }
 
     public static string ConvertToPascalCase(string input)
@@ -60,6 +74,4 @@ else
 
         return string.Join(string.Empty, words);
     }
-
 }
-
