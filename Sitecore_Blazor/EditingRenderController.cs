@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -23,31 +24,52 @@ public class EditingRenderController : ControllerBase
             var requestBody = await new StreamReader(Request.Body).ReadToEndAsync();
             _logger.LogInformation($"Request Body: {requestBody}");
 
-            // Parse JSON
+            // Parse the incoming JSON request
             var editingData = JsonSerializer.Deserialize<JsonElement>(requestBody);
 
-            // Extract 'args'
+            // Extract query parameters
+            var query = Request.Query.ToDictionary(q => q.Key, q => q.Value.ToString());
+            _logger.LogInformation($"Query Params: {JsonSerializer.Serialize(query)}");
+
+            // Extract cookies
+            var cookies = Request.Cookies.ToDictionary(c => c.Key, c => c.Value);
+            _logger.LogInformation($"Cookies: {JsonSerializer.Serialize(cookies)}");
+
+            // Extract preview data (similar to Next.js 'previewData')
+            if (editingData.TryGetProperty("previewData", out var previewDataElement))
+            {
+                var previewData = previewDataElement.GetRawText();
+                _logger.LogInformation($"Preview Data: {previewData}");
+            }
+
+            // Extract the URL argument (similar to args[0] in Next.js)
             if (!editingData.TryGetProperty("args", out var argsElement) || argsElement.ValueKind != JsonValueKind.Array)
             {
                 return BadRequest("Missing 'args' in request.");
             }
 
-            // Extract Experience Editor URL
-            var editorUrl = argsElement[0].GetString(); // First argument
+            var editorUrl = argsElement[0].GetString();
             if (string.IsNullOrEmpty(editorUrl))
             {
                 return BadRequest("Invalid Experience Editor URL.");
             }
 
-            // Return JSON with the editor URL
-            return Ok(new { url = editorUrl });
+            // Simulate setting preview mode cookie
+            Response.Cookies.Append("PreviewMode", "true");
+
+            // Simulate redirect with preview data
+            return Ok(new   
+            {
+                url = editorUrl,
+                message = "Preview mode enabled",
+                cookies,
+                query
+            });
         }
         catch (Exception ex)
         {
-            _logger.LogError($"Error rendering Experience Editor: {ex.Message}");
-            return StatusCode(500, $"Error rendering Experience Editor: {ex.Message}");
+            _logger.LogError($"Error processing editing request: {ex.Message}");
+            return StatusCode(500, $"Error processing editing request: {ex.Message}");
         }
     }
-
-
 }
