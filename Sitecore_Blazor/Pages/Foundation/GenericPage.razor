@@ -43,7 +43,11 @@ else
         string dictionaryUrl = Constants.SitecoreCMUrl + Constants.DictionaryRender + Constants.AppNameWithVersion + "?sc_apikey=" + Constants.SCApiKey;
 
         var dictionaryResult = await RestGatewayManager.GetAsync<DictionaryResponse>(dictionaryUrl, null, RestEndPointManager.RestEndpoint.CE, null);
-        DictionaryData = dictionaryResult.ResultData.Phrases;
+
+        if (dictionaryResult.ResultData != null && dictionaryResult.ResultData.Phrases != null && dictionaryResult.ResultData.Phrases.Any())
+        {
+            DictionaryData = dictionaryResult.ResultData.Phrases;
+        }
 
         DictionaryHelper.SetDictionaryData(DictionaryData);
     }
