@@ -1,6 +1,4 @@
-﻿using Sitecore_Blazor.Models.Blocks;
-
-namespace Sitecore_Blazor.Models.Shared
+﻿namespace Sitecore_Blazor.Models.Shared
 {
     public class HeaderModel
     {

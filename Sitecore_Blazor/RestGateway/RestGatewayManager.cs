@@ -1,15 +1,6 @@
 ﻿
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using Sitecore_Blazor.RestGateway;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sitecore_Blazor.RestGateway
 {
@@ -108,7 +99,7 @@ namespace Sitecore_Blazor.RestGateway
                         };
 
                         if (response.IsSuccessStatusCode && response.StatusCode != System.Net.HttpStatusCode.BadRequest)
-                        
+
                         {
                             objResponse.ResultData = JsonConvert.DeserializeObject<T>(result, settings);
                             objResponse.IsSuccessful = true;

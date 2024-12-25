@@ -1,6 +1,4 @@
-﻿using Sitecore_Blazor.Models.Blocks;
-
-namespace Sitecore_Blazor.Models.Component
+﻿namespace Sitecore_Blazor.Models.Component
 {
     public class FeaturedProductModel
     {

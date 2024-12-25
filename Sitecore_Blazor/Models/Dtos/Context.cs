@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace sitecoreblazor.SitecoreModels
+﻿namespace sitecoreblazor.SitecoreModels
 {
     // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
     public class Context
@@ -38,11 +36,11 @@ namespace sitecoreblazor.SitecoreModels
     {
     }
 
-/*    public class Placeholder
-    {
-        [JsonExtensionData]
-        public Dictionary<string, List<Component>> Components { get; set; }
-    }*/
+    /*    public class Placeholder
+        {
+            [JsonExtensionData]
+            public Dictionary<string, List<Component>> Components { get; set; }
+        }*/
 
     public class Root
     {

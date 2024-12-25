@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-
-namespace Sitecore_Blazor.Models.Blocks
+﻿namespace Sitecore_Blazor.Models.Blocks
 {
     public class CarouselItem
     {

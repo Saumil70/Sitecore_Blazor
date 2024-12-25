@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using Sitecore_Blazor.RestGateway;
 
 var builder = WebApplication.CreateBuilder(args);

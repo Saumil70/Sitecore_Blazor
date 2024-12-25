@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using Sitecore_Blazor;
+﻿using Sitecore_Blazor;
 using Sitecore_Blazor.Models.SitecoreFields;
 
 public class ButtonField
@@ -21,7 +17,7 @@ public class ButtonValue
             if (!string.IsNullOrEmpty(value) && value.Contains(Constants.UrlWithVersion))
             {
                 _href = value.Split('/').Last().ToLower();
-                if(_href == "")
+                if (_href == "")
                 {
                     _href = _href + "/home";
                 }
