@@ -35,8 +35,8 @@ else
 
     protected override async Task OnParametersSetAsync()
     {
-        string apiUrl = Constants.SitecoreCMUrl + Constants.LayoutRender + Constants.ItemApi + Constants.ProjectRoot + pageSlug + "&sc_apikey=" + Constants.SCApiKey;
-
+        pageSlug = pageSlug == "home" ? "/" : "/"+pageSlug;
+        string apiUrl = Constants.SitecoreCMUrl + Constants.LayoutRender + Constants.ItemApi + pageSlug + "&sc_apikey=" + Constants.SCApiKey;
         var result = await RestGatewayManager.GetAsync<Root>(apiUrl, null, RestEndPointManager.RestEndpoint.CE, null);
         ContentData = result.ResultData;
 
@@ -47,4 +47,5 @@ else
 
         DictionaryHelper.SetDictionaryData(DictionaryData);
     }
+
 }

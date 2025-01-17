@@ -13,7 +13,9 @@
             var isActive = HeaderModel.CurrentPage == item.Url.Split('/').Last().ToLower() ? "active" : "";
 
             <li class="nav-item">
-                <a class="nav-link @isActive" href="@item.Url.Split('/').Last().ToLower()">@item.Name</a>
+                <a class="nav-link @isActive" href="javascript:void(0);" @onclick="() => NavigationManager.NavigateTo(item.Url, true)">
+                    @item.Name
+                </a>
             </li>
         }
     </ul>
